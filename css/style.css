@@ -1,0 +1,314 @@
+/* Fond de la page */
+body {
+    background-image: url('/images/rugby.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 100%;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    font-family: 'Arial', sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Style du titre */
+h1 {
+    color: #070000;
+    font-size: 36px;
+    text-align: center;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+/* Style du conteneur du jeu */
+.game-container {
+    background-color: rgba(255, 255, 255, 0.9);
+    border: 3px solid #0044cc;
+    padding: 20px;
+    text-align: center;
+    min-height: 400px;
+    width: 90%;
+    max-width: 600px;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    position: relative;
+    overflow: hidden;
+    margin: 20px;
+}
+
+/* Style des ballons */
+.ballon {
+    width: 100px;
+    height: 100px;
+    background-image: url('images/ballon.png');
+    background-size: cover;
+    cursor: pointer;
+    position: absolute;
+    animation: moveAnimation 5s linear infinite, bounceAnimation 0.5s alternate infinite;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    border-radius: 50%;
+    transform-origin: center bottom; /* Ajout d'un point de rotation en bas */
+}
+
+/* Style de la traînée des ballons */
+.ballon::before {
+    content: "";
+    width: 4px;
+    height: 4px;
+    background-color: rgba(255, 255, 255, 0.7);
+    position: absolute;
+    animation: trailAnimation 2s linear infinite;
+}
+
+/* Bouton de démarrage */
+#start-button {
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+#start-button:hover {
+    background-color: #45a049;
+}
+
+/* Messages de jeu */
+#message {
+    font-size: 18px;
+    margin-top: 20px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+/* Bouton de rejouer */
+#replay-button {
+    background-color: #2196F3;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 20px;
+    display: none;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+/* Le bouton d'inscription */
+#replay-container {
+    display: none;
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    z-index: 1000; /* Pour être sûr que le bouton est au-dessus du reste du contenu */
+}
+
+#replay-button {
+    background-color: #0074D9;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    text-decoration: none; /* Pour supprimer le soulignement du lien */
+}
+
+#replay-button:hover {
+    background-color: #0056b3; /* Couleur légèrement plus foncée au survol */
+}
+
+/* Style du formulaire d'inscription à l'intérieur du modal */
+#registration-form {
+    text-align: center;
+    display: none;
+    padding: 20px;
+    background-color: rgba(0, 68, 204, 0.9);
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* Ajoutez cette classe pour afficher l'élément */
+.registration-visible #registration-form {
+    display: block;
+}
+
+/* Style des étiquettes de champ */
+#registration-form label {
+    display: block;
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+/* Style des champs de saisie */
+#registration-form input[type="text"],
+#registration-form input[type="email"] {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* Style du bouton d'inscription */
+#registration-form input[type="submit"] {
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+    margin-top: 20px;
+}
+
+#registration-form input[type="submit"]:hover {
+    background-color: #45a049;
+}
+
+/* Animation de déplacement aléatoire */
+@keyframes moveAnimation {
+    0% {
+        left: calc(10% + (90% - 100px) * random());
+        top: calc(10% + (80% - 100px) * random());
+    }
+    100% {
+        left: calc(10% + (90% - 100px) * random());
+        top: calc(10% + (90% - 100px) * random());
+    }
+}
+
+/* Animation de rebondissement */
+@keyframes bounceAnimation {
+    0% {
+        transform: translateY(50px);
+    }
+    100% {
+        transform: translateY(-70px);
+    }
+}
+
+/* Animation de la traînée */
+@keyframes trailAnimation {
+    0% {
+        opacity: 0.5;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+/* Styles pour le modal */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.7); /* Fond semi-transparent noir */
+}
+
+.modal-content {
+    background-color: #fff; /* Fond blanc du modal */
+    margin: 15% auto; /* Positionnement vertical au centre */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 400px;
+    position: relative;
+    text-align: center;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5); /* Ombre autour du modal */
+}
+
+.close {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 10px;
+    cursor: pointer;
+}
+
+/* Style du titre du modal */
+.modal-content h2 {
+    color: #070000; /* Couleur du texte du titre */
+    font-size: 24px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    margin-bottom: 20px;
+}
+
+/* Style du message du modal */
+#modal-message {
+    font-size: 18px;
+    margin-top: 20px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+/* Style du formulaire d'inscription à l'intérieur du modal */
+#registration-form {
+    text-align: center;
+    margin-top: 20px;
+}
+
+/* Style des étiquettes de champ */
+#registration-form label {
+    display: block;
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+/* Style des champs de saisie */
+#registration-form input[type="text"],
+#registration-form input[type="email"] {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    color: #000; /* Couleur du texte en noir */
+    background-color: #fff; /* Fond blanc */
+    transition: border-color 0.3s, background-color 0.3s, color 0.3s; /* Effets de transition */
+}
+
+/* Style des champs de saisie lorsque survolés ou actifs */
+#registration-form input[type="text"]:hover,
+#registration-form input[type="text"]:focus,
+#registration-form input[type="email"]:hover,
+#registration-form input[type="email"]:focus {
+    border-color: #000; /* Bordure noire en survol ou au focus */
+    background-color: #fff; /* Fond blanc en survol ou au focus */
+    color: #000; /* Texte en noir en survol ou au focus */
+}
+
+/* Style du bouton d'inscription */
+#registration-form input[type="submit"] {
+    background-color: #4caf50; /* Couleur de fond verte pour le bouton */
+    color: white; /* Couleur du texte blanc */
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+    margin-top: 20px;
+}
+
+#registration-form input[type="submit"]:hover {
+    background-color: #45a049; /* Couleur légèrement plus foncée au survol */
+}
